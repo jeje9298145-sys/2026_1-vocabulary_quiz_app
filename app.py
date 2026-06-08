@@ -103,8 +103,10 @@ class VocabularyQuizApp:
         if self.current is None:
             return
 
+        word = self.current.term
+
         self.hint_var.set(
-            f"힌트: 정답은 {len(self.current.meaning)}글자입니다."
+            f"힌트: 첫 글자 '{word[0]}', 총 {len(word)}글자"
         )
 
     def check_current(self) -> None:
