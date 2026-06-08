@@ -10,8 +10,8 @@ from vocabulary_quiz_app.quiz_logic import Word, check_answer, draw_word
 
 class VocabularyQuizApp:
     def __init__(self, root: tk.Tk, words: list[Word]) -> None:
-        self.words = list(words)  # 원본 단어 리스트 복사
-        self.wrong_words: list[Word] = []  # [신규 추가] 틀린 단어를 기억할 주머니
+        self.words = list(words)
+        self.wrong_words: list[Word] = []
         
         self.rng = random.Random()
         self.current: Word | None = None
@@ -50,11 +50,10 @@ class VocabularyQuizApp:
         self.next_word()
 
     def next_word(self) -> None:
-        # 남아있는 단어가 없는 경우 오답 노트 검사
         if not self.words:
-            if self.wrong_words:  # 틀린 단어 주머니에 단어가 있다면
-                self.words = list(self.wrong_words)  # 시험지를 오답 주머니로 교체!
-                self.wrong_words = []  # 다음 바퀴 복습을 위해 오답 주머니 비우기
+            if self.wrong_words:
+                self.words = list(self.wrong_words)
+                self.wrong_words = []
             else:
                 self.word_var.set("종료")
                 self.check_button.state(["disabled"])
@@ -62,7 +61,6 @@ class VocabularyQuizApp:
 
         self.current = draw_word(self.words, self.rng)
         
-        # [버그 해결 핵심] 출제된 단어는 목록에서 지워 중복 및 무한 루프 방지
         if self.current in self.words:
             self.words.remove(self.current)
 
@@ -84,7 +82,7 @@ class VocabularyQuizApp:
             self.feedback_var.set("정답입니다!")
         else:
             self.feedback_var.set(f"오답입니다. 정답: {self.current.meaning}")
-            self.wrong_words.append(self.current)  # [신규 추가] 틀린 단어 기억하기
+            self.wrong_words.append(self.current)
             
         self.score_var.set(f"Score: {self.score}/{self.total}")
         self.check_button.state(["disabled"])
