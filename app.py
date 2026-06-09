@@ -84,5 +84,13 @@ class VocabularyQuizApp:
             self.feedback_var.set(f"오답입니다. 정답: {self.current.meaning}")
             self.wrong_words.append(self.current)
             
-        self.score_var.set(f"Score: {self.score}/{self.total}")
+        accuracy = (self.score / self.total) * 100
+        if accuracy >= 80:
+            msg = f"정답률 {accuracy:.1f}% - 완벽해요!"
+        elif accuracy >= 50:
+            msg = f"정답률 {accuracy:.1f}% - 조금 더 노력하세요"
+        else:
+            msg = f"정답률 {accuracy:.1f}% - 처음부터 다시 시작하세요!"
+
+        self.score_var.set(f"Score: {self.score}/{self.total}\n{msg}")
         self.check_button.state(["disabled"])
