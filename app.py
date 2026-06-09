@@ -92,5 +92,5 @@ class VocabularyQuizApp:
         else:
             msg = f"정답률 {accuracy:.1f}% - 처음부터 다시 시작하세요!"
 
-        self.score_var.set(f"Score: {self.score}/{self.total}\n{msg}")
+        self.score_var.set(f"Score: {self.score}/{self.total} | {msg}"
         self.check_button.state(["disabled"])
